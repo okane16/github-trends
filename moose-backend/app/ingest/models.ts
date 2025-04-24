@@ -13,10 +13,12 @@ export enum GitHubEventType {
   Fork = "ForkEvent",
   Member = "MemberEvent",
   Release = "ReleaseEvent",
+  CommitComment = "CommitCommentEvent",
+  Public = "PublicEvent",
 }
 
 export interface IGhEvent {
-  eventType: string;
+  eventType: GitHubEventType;
   eventId: Key<string>;
   createdAt: Date;
   actorLogin: string;

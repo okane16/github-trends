@@ -1,6 +1,6 @@
 import { ConsumptionApi, ConsumptionUtil } from "@514labs/moose-lib";
 import { tags } from "typia";
-import { RepoStarEvent } from "../index";
+import { RepoStarDedupe } from "../views/RepoStarDedupe";
 
 interface QueryParams {
   interval?: "minute" | "hour" | "day";
@@ -24,9 +24,9 @@ export default new ConsumptionApi<QueryParams, ResponseBody[]>(
   "topicTimeseries",
   async (
     { interval = "minute", limit = 10, exclude = "" }: QueryParams,
-    { client, sql }: ConsumptionUtil,
+    { client, sql }: ConsumptionUtil
   ) => {
-    const RepoTable = RepoStarEvent.table!;
+    const RepoTable = RepoStarDedupe.targetTable!;
     const cols = RepoTable.columns;
 
     const intervalMap = {
@@ -72,9 +72,13 @@ export default new ConsumptionApi<QueryParams, ResponseBody[]>(
                     count() AS totalEvents,
                     uniqExact(${cols.repoId}) AS uniqueReposCount,
                     uniqExact(${cols.actorId}) AS uniqueUsersCount
-                FROM ${RepoStarEvent.table!}
+                FROM ${RepoTable}
                 WHERE length(${cols.repoTopics!}) > 0
-                ${exclude ? sql`AND arrayAll(x -> x NOT IN (${exclude}), ${cols.repoTopics!})` : sql``}
+                ${
+                  exclude
+                    ? sql`AND arrayAll(x -> x NOT IN (${exclude}), ${cols.repoTopics!})`
+                    : sql``
+                }
                 ${intervalMap[interval].groupBy}
                 ${intervalMap[interval].orderBy}
                 ${intervalMap[interval].limit}
@@ -85,5 +89,5 @@ export default new ConsumptionApi<QueryParams, ResponseBody[]>(
 
     const resultSet = await client.query.execute<ResponseBody>(query);
     return await resultSet.json();
-  },
+  }
 );

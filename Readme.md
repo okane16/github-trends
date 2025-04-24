@@ -6,8 +6,8 @@ A real-time dashboard that tracks and visualizes development trends from GitHub.
 
 ```
 github-dev-trends/
-├── live-dev-trends-dashboard/ # Frontend dashboard application
-├── moose/ # Backend services
+├── dashboard/ # Frontend dashboard application
+├── moose-backend/ # Backend services
 └── README.md # Project documentation
 ```
 
@@ -25,35 +25,38 @@ This project aims to provide insights into GitHub development trends by collecti
 ### Installation
 
 1. Clone the repository:
+
 ```bash filename="terminal" copy
 npx create-moose-app GitHubDevTrends github-dev-trends
 cd github-dev-trends
 ```
 
 2. Set up the backend:
+
 ```bash filename="terminal" copy
 cd moose
 npm install
 ```
 
 3. Set up the frontend dashboard:
+
 ```bash filename="terminal" copy
-cd live-dev-trends-dashboard
+cd dashboard
 npm install
 ```
 
 4. Start the application:
+
 ```bash
 npm run dev
 ```
+
 ```
 
 ## Usage
 
-Once you successfully spin up your Moose dev server, you can start the workflow that polls the GitHub events API for the latest events:
+Once you successfully spin up your Moose dev server, it will automatically start the workflow that polls the GitHub events API for the latest events.
 
-```bash filename="terminal" copy
-moose workflow start github-dev-trends
-```
 
 You can then view the dashboard by navigating to `http://localhost:3000` in your browser.
+```
