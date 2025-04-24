@@ -47,7 +47,7 @@ export interface FetchEventsOutput {
 export const ETAG_FILE_PATH = path.join(
   process.cwd(),
   "data",
-  "github_etag.json",
+  "github_etag.json"
 );
 
 // Ensure the data directory exists
@@ -80,7 +80,7 @@ export const saveEtag = (etag: string): void => {
       JSON.stringify({
         etag,
         updated: new Date().toISOString(),
-      }),
+      })
     );
   } catch (error) {
     console.error("Failed to save etag:", error);
@@ -95,4 +95,8 @@ export const createOctokit = () => {
   return new Octokit({
     auth: process.env.GITHUB_TOKEN,
   });
+};
+
+export const getBaseUrl = () => {
+  return process.env.MOOSE_URL || "http://localhost:4000";
 };

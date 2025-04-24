@@ -1,9 +1,9 @@
 import { TaskFunction, TaskDefinition } from "@514labs/moose-lib";
-import { createOctokit } from "../../utils";
+import { createOctokit, getBaseUrl } from "../../utils";
 import { IGhEvent } from "../../ingest/models";
 
 const octokit = createOctokit();
-const baseUrl = process.env.MOOSE_URL || "http://localhost:4000";
+const baseUrl = getBaseUrl();
 
 // The initial input data and data passed between tasks can be
 // defined in the task function parameter
