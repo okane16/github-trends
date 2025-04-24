@@ -3,6 +3,7 @@ import { createOctokit } from "../../utils";
 import { IGhEvent } from "../../ingest/models";
 
 const octokit = createOctokit();
+const baseUrl = process.env.MOOSE_URL || "http://localhost:4000";
 
 // The initial input data and data passed between tasks can be
 // defined in the task function parameter
@@ -11,7 +12,7 @@ const load: TaskFunction = async (input?: any) => {
     octokit.activity.listPublicEvents,
     {
       per_page: 100,
-    },
+    }
   );
 
   for await (const response of responses) {
@@ -31,7 +32,7 @@ const load: TaskFunction = async (input?: any) => {
         createdAt: event.created_at ? new Date(event.created_at) : new Date(),
       } as IGhEvent;
 
-      await fetch("http://localhost:4000/ingest/GhEvent", {
+      await fetch(`${baseUrl}/ingest/GhEvent`, {
         method: "POST",
         body: JSON.stringify(ghEvent),
       });
