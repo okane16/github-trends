@@ -6,7 +6,7 @@ import {
 
 export type TopicTimeseriesRequest = ConsumptionTopicTimeseriesGetRequest;
 
-const baseUrl = process.env.MOOSE_API_URL || "http://localhost:4000";
+const baseUrl = process.env.NEXT_PUBLIC_MOOSE_API_URL;
 
 const apiConfig = new Configuration({
   basePath: baseUrl,
