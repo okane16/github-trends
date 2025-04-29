@@ -1,6 +1,6 @@
+import { RepoStarEvent } from "./../index";
 import { ConsumptionApi, ConsumptionUtil } from "@514labs/moose-lib";
 import { tags } from "typia";
-import { RepoStarDedupe } from "../views/RepoStarDedupe";
 
 interface QueryParams {
   interval?: "minute" | "hour" | "day";
@@ -26,8 +26,8 @@ export default new ConsumptionApi<QueryParams, ResponseBody[]>(
     { interval = "minute", limit = 10, exclude = "" }: QueryParams,
     { client, sql }: ConsumptionUtil
   ) => {
-    const RepoTable = RepoStarDedupe.targetTable!;
-    const cols = RepoTable.columns;
+    const RepoStar = RepoStarEvent.table!;
+    const cols = RepoStar.columns;
 
     const intervalMap = {
       hour: {
@@ -69,10 +69,10 @@ export default new ConsumptionApi<QueryParams, ResponseBody[]>(
                 SELECT
                     ${intervalMap[interval].select},
                     arrayJoin(${cols.repoTopics!}) AS topic,
-                    count() AS totalEvents,
+                    count(distinct ${cols.eventId}) AS totalEvents,
                     uniqExact(${cols.repoId}) AS uniqueReposCount,
                     uniqExact(${cols.actorId}) AS uniqueUsersCount
-                FROM ${RepoTable}
+                FROM ${RepoStar}
                 WHERE length(${cols.repoTopics!}) > 0
                 ${
                   exclude

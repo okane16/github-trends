@@ -1,6 +1,5 @@
 import { IGhEvent, IRepoStarEvent } from "./ingest/models";
 import { transformGhEvent } from "./ingest/transform";
-export * from "./views/RepoStarDedupe";
 export * from "./apis/topicTimeseries";
 
 import { IngestPipeline } from "@514labs/moose-lib";
