@@ -1,4 +1,4 @@
-import { IGhEvent, IRepoStarEvent } from "./ingest/models";
+import { IGhEvent, IRepoStarEvent, IRepoStarEventV2 } from "./ingest/models";
 import { transformGhEvent } from "./ingest/transform";
 export * from "./apis/topicTimeseries";
 
@@ -16,4 +16,13 @@ export const RepoStarEvent = new IngestPipeline<IRepoStarEvent>("RepoStar", {
   table: true,
 });
 
-GhEvent.stream!.addTransform(RepoStarEvent.stream!, transformGhEvent);
+export const RepoStarEventV2 = new IngestPipeline<IRepoStarEventV2>(
+  "RepoStarV2",
+  {
+    ingest: false,
+    stream: true,
+    table: true,
+  }
+);
+
+GhEvent.stream!.addTransform(RepoStarEventV2.stream!, transformGhEvent);

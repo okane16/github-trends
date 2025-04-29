@@ -51,3 +51,23 @@ export interface IRepoStarEvent extends IGhEvent {
   repoOrgLogin?: string;
   repoHomepage?: string;
 }
+
+export interface IRepoStarEventV2 extends IGhEvent {
+  repoDescription: string;
+  repoTopics: string[];
+  repoLanguage: string;
+  repoStars: number;
+  repoForks: number;
+  repoWatchers: number;
+  repoOpenIssues: number;
+  repoCreatedAt: Date;
+  repoOwnerLogin: string;
+  repoOwnerId: number;
+  repoOwnerUrl: string;
+  repoOwnerAvatarUrl: string;
+  repoOwnerType: string;
+  repoOrgId: number;
+  repoOrgUrl: string;
+  repoOrgLogin: string;
+  repoHomepage: string;
+}

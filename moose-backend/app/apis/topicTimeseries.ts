@@ -1,4 +1,4 @@
-import { RepoStarEvent } from "./../index";
+import { RepoStarEventV2 } from "./../index";
 import { ConsumptionApi, ConsumptionUtil } from "@514labs/moose-lib";
 import { tags } from "typia";
 
@@ -26,7 +26,7 @@ export default new ConsumptionApi<QueryParams, ResponseBody[]>(
     { interval = "minute", limit = 10, exclude = "" }: QueryParams,
     { client, sql }: ConsumptionUtil
   ) => {
-    const RepoStar = RepoStarEvent.table!;
+    const RepoStar = RepoStarEventV2.table!;
     const cols = RepoStar.columns;
 
     const intervalMap = {
