@@ -4,6 +4,5 @@ export * from "./apis/topReposByTopic";
 export * from "./apis/topicPopularity";
 export * from "./apis/languageStats";
 export * from "./apis/repoGrowthTrends";
-export * from "./apis/topicCorrelations";
 export * from "./apis/dashboardOverview";
 export * from "./views/TopicTimeseries";
