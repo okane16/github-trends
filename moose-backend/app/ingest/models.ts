@@ -1,4 +1,5 @@
-import { Key } from "@514labs/moose-lib";
+import { Key, IngestPipeline } from "@514labs/moose-lib";
+import { transformGhEvent } from "./transform";
 
 export enum GitHubEventType {
   Watch = "WatchEvent",
@@ -71,3 +72,26 @@ export interface IRepoStarEventV2 extends IGhEvent {
   repoOrgLogin: string;
   repoHomepage: string;
 }
+
+export const GhEvent = new IngestPipeline<IGhEvent>("GhEvent", {
+  ingest: true,
+  table: true,
+  stream: true,
+});
+
+export const RepoStarEvent = new IngestPipeline<IRepoStarEvent>("RepoStar", {
+  ingest: false,
+  stream: true,
+  table: true,
+});
+
+export const RepoStarEventV2 = new IngestPipeline<IRepoStarEventV2>(
+  "RepoStarV2",
+  {
+    ingest: false,
+    stream: true,
+    table: true,
+  }
+);
+
+GhEvent.stream!.addTransform(RepoStarEventV2.stream!, transformGhEvent);

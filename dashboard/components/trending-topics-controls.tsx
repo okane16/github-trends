@@ -11,10 +11,10 @@ import { TagInput } from "./tag-input";
 import { Label } from "@/components/ui/label";
 
 interface TrendingTopicsControlsProps {
-  interval: string;
+  interval: "minute" | "hour" | "day";
   limit: number;
   exclude: string;
-  onIntervalChange: (value: string) => void;
+  onIntervalChange: (value: "minute" | "hour" | "day") => void;
   onLimitChange: (value: number) => void;
   onExcludeChange: (value: string) => void;
 }

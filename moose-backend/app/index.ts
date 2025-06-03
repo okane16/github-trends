@@ -1,28 +1,9 @@
-import { IGhEvent, IRepoStarEvent, IRepoStarEventV2 } from "./ingest/models";
-import { transformGhEvent } from "./ingest/transform";
+export * from "./ingest/models";
 export * from "./apis/topicTimeseries";
-
-import { IngestPipeline } from "@514labs/moose-lib";
-
-export const GhEvent = new IngestPipeline<IGhEvent>("GhEvent", {
-  ingest: true,
-  table: true,
-  stream: true,
-});
-
-export const RepoStarEvent = new IngestPipeline<IRepoStarEvent>("RepoStar", {
-  ingest: false,
-  stream: true,
-  table: true,
-});
-
-export const RepoStarEventV2 = new IngestPipeline<IRepoStarEventV2>(
-  "RepoStarV2",
-  {
-    ingest: false,
-    stream: true,
-    table: true,
-  }
-);
-
-GhEvent.stream!.addTransform(RepoStarEventV2.stream!, transformGhEvent);
+export * from "./apis/topReposByTopic";
+export * from "./apis/topicPopularity";
+export * from "./apis/languageStats";
+export * from "./apis/repoGrowthTrends";
+export * from "./apis/topicCorrelations";
+export * from "./apis/dashboardOverview";
+export * from "./views/TopicTimeseries";
